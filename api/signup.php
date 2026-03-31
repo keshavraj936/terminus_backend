@@ -2,7 +2,7 @@
 require_once("../config/db.php");
 header("Content-Type: application/json");
 
-require_once(__DIR__ . "/../vendor/autoload.php");
+
 use Firebase\JWT\JWT;
 
 require_once(__DIR__ . "/../config/db.php");
