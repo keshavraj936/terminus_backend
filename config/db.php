@@ -1,24 +1,34 @@
 <?php
-// CORS (keep your existing block as-is)
+// CORS Handling
+$allowed_origins = [
+    "https://campusconnect-frontend-psi.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
+];
 
-$allowed_origin = "https://campusconnect-frontend-psi.vercel.app";
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-header("Access-Control-Allow-Origin: $allowed_origin");
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+} else {
+    header("Access-Control-Allow-Origin: https://campusconnect-frontend-psi.vercel.app");
+}
+
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Admin-Key");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
 
-// ✅ USE ENV VARIABLES (Render) with Local Fallbacks!
-$host = getenv("DB_HOST") ?: "localhost";
-$port = getenv("DB_PORT") ?: "3306";
-$dbname = getenv("DB_NAME") ?: "campus_connect";
-$username = getenv("DB_USER") ?: "campus_user";
-$password = getenv("DB_PASS") ?: "Campus@123";
+// ✅ GET FROM RENDER ENV
+$host = getenv("MYSQLHOST");
+$port = getenv("MYSQLPORT");
+$dbname = getenv("MYSQLDATABASE");
+$username = getenv("MYSQLUSER");
+$password = getenv("MYSQLPASSWORD");
 
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
@@ -28,8 +38,7 @@ try {
         $username,
         $password,
         [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]
     );
 

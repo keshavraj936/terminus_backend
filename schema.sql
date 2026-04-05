@@ -21,6 +21,11 @@ CREATE TABLE `users` (
   `department` varchar(100) DEFAULT NULL,
   `year` int DEFAULT NULL,
   `batch` varchar(50) DEFAULT NULL,
+  `section` varchar(50) DEFAULT NULL,
+  `role` enum('student','admin') DEFAULT 'student',
+  `about_me` text DEFAULT NULL,
+  `insta_link` varchar(255) DEFAULT NULL,
+  `github_link` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `avatar_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -101,26 +106,10 @@ DROP TABLE IF EXISTS `mess_menu`;
 CREATE TABLE `mess_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
   `day` varchar(20) DEFAULT NULL,
-  `meal_type` varchar(20) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `meal_type` varchar(30) DEFAULT NULL,
   `items` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-DROP TABLE IF EXISTS `messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `messages` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `sender_id` int NOT NULL,
-  `receiver_id` int NOT NULL,
-  `message` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sender_id` (`sender_id`),
-  KEY `idx_chat_receiver` (`receiver_id`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

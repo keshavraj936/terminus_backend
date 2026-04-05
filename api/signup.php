@@ -16,6 +16,9 @@ $password = $data["password"] ?? null;
 $department = $data["department"] ?? null;
 $year = $data["year"] ?? null;
 $batch = $data["batch"] ?? null;
+$section = $data["section"] ?? null;
+$insta_link = $data["insta_link"] ?? null;
+$github_link = $data["github_link"] ?? null;
 
 // Validation
 if (!$name || !$email || !$password) {
@@ -38,8 +41,8 @@ try {
 
     // Insert user
     $stmt = $conn->prepare("
-        INSERT INTO users (name, email, password, department, year, batch)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO users (name, email, password, department, year, batch, section, insta_link, github_link)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     $stmt->execute([
@@ -48,7 +51,10 @@ try {
         $hashedPassword,
         $department,
         $year,
-        $batch
+        $batch,
+        $section,
+        $insta_link,
+        $github_link
     ]);
 
     $user_id = $conn->lastInsertId();
