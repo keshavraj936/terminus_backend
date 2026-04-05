@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Allow direct access to existing files
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Route /api/... to api folder
+RewriteRule ^api/(.*)$ api/$1 [L]
