@@ -1,10 +1,19 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once("config/db.php");
 
-$stmt = $conn->query("SELECT * FROM users");
-$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+require 'config/db.php';
 
-header('Content-Type: application/json');
-echo json_encode($data);
+try {
+    $stmt = $conn->query("SELECT 1");
+    echo json_encode([
+        "status" => "success",
+        "message" => "Database connected successfully 🚀"
+    ]);
+} catch (Exception $e) {
+    echo json_encode([
+        "status" => "error",
+        "message" => $e->getMessage()
+    ]);
+}
+?>
