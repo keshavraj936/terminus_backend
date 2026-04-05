@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../config/db.php");
+require_once(__DIR__ . "/config/db.php");
 header("Content-Type: application/json");
 
 define('ADMIN_SECRET', 'cc_admin_secret_2024_keshav');
