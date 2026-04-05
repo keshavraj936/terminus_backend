@@ -1,5 +1,4 @@
 <?php
-require_once("config/db.php");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: GET");
 
@@ -16,7 +15,7 @@ try {
         $token = str_replace("Bearer ", "", $authHeader);
         $secret_key = "MY_SUPER_SECRET_KEY_1234567890_ABCDEF";
         try {
-            require_once(__DIR__ . "/../vendor/autoload.php");
+            require_once(__DIR__ . "/vendor/autoload.php");
             $decoded = \Firebase\JWT\JWT::decode($token, new \Firebase\JWT\Key($secret_key, 'HS256'));
             $current_user_id = $decoded->user_id;
 

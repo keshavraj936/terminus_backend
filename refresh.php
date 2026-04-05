@@ -1,12 +1,12 @@
 <?php
-require_once("config/db.php");
-require_once(__DIR__ . "/../vendor/autoload.php");
+require_once(__DIR__ . "/config/db.php");
+require_once(__DIR__ . "/vendor/autoload.php");
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 header("Content-Type: application/json");
-require_once(__DIR__ . "/../utils/response.php");
+require_once(__DIR__ . "/utils/response.php");
 
 if (!isset($_COOKIE['refresh_token'])) {
     sendResponse("error", "No refresh token provided");

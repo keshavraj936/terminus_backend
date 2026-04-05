@@ -1,11 +1,10 @@
 <?php
-require_once("config/db.php");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: GET, POST");
 
 require_once(__DIR__ . "/config/db.php");
-require_once(__DIR__ . "/../middleware/auth.php");
-require_once(__DIR__ . "/../utils/response.php");
+require_once(__DIR__ . "/middleware/auth.php");
+require_once(__DIR__ . "/utils/response.php");
 
 $userData = verifyToken();
 $user_id = $userData->user_id;
