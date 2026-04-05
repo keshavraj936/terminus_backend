@@ -122,11 +122,15 @@ if ($method === 'POST') {
         }
         $conn->beginTransaction();
         $conn->exec("DELETE FROM mess_menu");
-        $stmt = $conn->prepare("INSERT INTO mess_menu (day, meal_type, items) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO mess_menu (day, date, meal_type, items) VALUES (?, ?, ?, ?)");
         foreach ($menu as $day => $meals) {
             if (is_array($meals)) {
+                $date = $meals['date'] ?? null;  // extract date field
                 foreach ($meals as $meal_type => $items) {
-                    $stmt->execute([$day, $meal_type, $items]);
+                    if ($meal_type === 'date') continue;  // skip date key as a meal row
+                    if (is_string($items)) {
+                        $stmt->execute([$day, $date, $meal_type, $items]);
+                    }
                 }
             }
         }
