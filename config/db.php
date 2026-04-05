@@ -23,24 +23,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// ✅ GET FROM RENDER ENV
-$host = getenv("MYSQLHOST");
-$port = getenv("MYSQLPORT");
-$dbname = getenv("MYSQLDATABASE");
-$username = getenv("MYSQLUSER");
-$password = getenv("MYSQLPASSWORD");
+// ✅ Use Railway PUBLIC URL directly
+$databaseUrl = getenv("MYSQL_PUBLIC_URL");
+
+$dbparts = parse_url($databaseUrl);
+
+$host = $dbparts['host'];
+$port = $dbparts['port'];
+$dbname = ltrim($dbparts['path'], '/');
+$username = $dbparts['user'];
+$password = $dbparts['pass'];
 
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
 
-    $conn = new PDO(
-        $dsn,
-        $username,
-        $password,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]
-    );
+    $conn = new PDO($dsn, $username, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
 
 } catch (PDOException $e) {
     echo json_encode([
