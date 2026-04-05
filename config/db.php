@@ -23,16 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// ✅ Use Railway PUBLIC URL directly
-$databaseUrl = getenv("MYSQL_PUBLIC_URL");
-
-$dbparts = parse_url($databaseUrl);
-
-$host = $dbparts['host'];
-$port = $dbparts['port'];
-$dbname = ltrim($dbparts['path'], '/');
-$username = $dbparts['user'];
-$password = $dbparts['pass'];
+$host = getenv("MYSQLHOST");
+$port = getenv("MYSQLPORT");
+$dbname = getenv("MYSQLDATABASE");
+$username = getenv("MYSQLUSER");
+$password = getenv("MYSQLPASSWORD");
 
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
