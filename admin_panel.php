@@ -87,7 +87,7 @@ if ($method === 'GET') {
     }
 
     if ($action === 'mess') {
-        $stmt = $conn->query("SELECT day, meal_type, items FROM mess_menu ORDER BY FIELD(day,'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), meal_type");
+        $stmt = $conn->query("SELECT day, date, meal_type, items FROM mess_menu ORDER BY FIELD(day,'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), meal_type");
         echo json_encode(["status" => "success", "data" => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
         exit;
     }

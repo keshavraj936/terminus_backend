@@ -9,7 +9,7 @@ try {
     $userData = verifyToken();
 
     $stmt = $conn->query("
-        SELECT day, meal_type, items 
+        SELECT day, date, meal_type, items 
         FROM mess_menu 
         ORDER BY FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), meal_type
     ");
