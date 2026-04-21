@@ -128,6 +128,9 @@ if ($method === 'POST') {
                 $date = $meals['date'] ?? null;  // extract date field
                 foreach ($meals as $meal_type => $items) {
                     if ($meal_type === 'date') continue;  // skip date key as a meal row
+                    if (is_array($items)) {
+                        $items = implode(', ', $items);
+                    }
                     if (is_string($items)) {
                         $stmt->execute([$day, $date, $meal_type, $items]);
                     }
